@@ -1,0 +1,128 @@
+ORGs Management: https://trailhead.salesforce.com/users/profiles/orgs
+
+1- create org
+2- change/reset admin password
+3- change domain
+- company information / limits
+4- enable Dev-hub
+- sfdx authorize dev-hub
+5- create scratch org 
+6- check scratch org imit
+7- setup scratch org definition: google -> scracth org config file 
+- enable org shape
+- sfdx authorize shape orgs
+- create shape orgs
+8- create scratch org snapshots
+- enable scratch org snapshots in dev hub
+- assign permissions to non-admin snapshot users
+
+
+0- from source org
+    - enable dev hub
+    - enable org shape
+    - enable org snapshot 
+
+1- create a sfdc project
+=> sfdx / sf force:project:create -n "EOEX SFDC Project"
+2- authorize (source) org
+=> sfdx / sf force:auth:web:login -a username -d
+3- create scratch org definition file
+=> sfdx / sf 
+    "hasSampleData" : true;
+4- create scratch org 
+=> sfdx / sf force:org:create -a eoex-sfdc-projXXX-scratch1 -d 30 -f config/project-scratch-def.json
+5- create org shape
+6- create org snapshot
+7- create target scratch org 
+8- set target scratch org as default
+Ctrl+shift+p -> sfdx: set as default 
+9- open target scratch org 
+
+
+====================================================
+    SCRATCH ORGS
+====================================================
+
+
+====================================================
+Source: 
+Name:           
+URL:            
+ID:         
+Type: Scratch Org          
+User 1:         
+Pass 1:         
+CLI: 
+==================================================== 
+
+
+
+
+
+====================================================
+    DEV ORGS
+====================================================
+
+
+
+====================================================
+Name:       EOEX Dev Hub
+URL:        https://eoex-dev-hub-dev-ed.trailblaze.lightning.force.com/
+ID:         00Dd200000CPxpa
+Type:       Trailhead Playground
+Username:   brave-impala-h22d97.com
+User 1:     sgrosset@brave-impala-h22d97.com
+Pass 1:     BSc25
+email:      sgrosset@gmail.com
+====================================================
+
+
+
+====================================================
+Name:       Retail
+URL:        https://eoex-org-retail-dev-ed.trailblaze.lightning.force.com/
+ID:         00DQy00000R6Ql6
+Type:       Trailhead Playground
+Username:   resilient-unicorn-x4qe0.com
+User 1:     sgrosset@resilient-unicorn-x4qe0.com
+Pass 1:     BSc25
+email:      sgrosset@gmail.com
+==================================================== 
+
+
+Base Source Scrartch-1
+https://agility-momentum-7206-dev-ed.scratch.my.salesforce.com 
+test-epaop0ntpyns@example.com
+riAqenf1wkiv(   => BSc25
+
+
+Base Source Scartch-1 Snapshot-1
+https://paas-trusted-4467-dev-ed.scratch.my.salesforce.com 
+test-5c0jbjzmtcwh@example.com
+h1Vkvqi&gytjl   => BSc25
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

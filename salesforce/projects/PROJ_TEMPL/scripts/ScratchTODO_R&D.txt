@@ -1,0 +1,735 @@
+- List all permission set groups
+- List all permission set groups by user
+
+
+- List all permission sets
+- List all permission sets by user
+SELECT PermissionSetId 
+FROM PermissionSetAssignment 
+WHERE AssigneeId = ''
+
+
+- list all users assigned to a particular permission sets
+SELECT AssigneeId 
+FROM PermissionSetAssignment 
+WHERE PermissionSetId = ''
+
+
+
+SELECT Id, ProfileId, Name
+FROM User
+
+SELECT Id, Name, UserLicenseId FROM Profile
+
+Select Id, Name, Profile.UserLicense.LicenseDefinitionKey From User
+
+Select Id, Name, IsActive
+From User 
+Where Profile.UserLicense.Name = 'Salesforce' 
+
+SELECT Id,UserLicenseId FROM Profile where name ='Salesforce'
+
+
+PermissionSet
+    Description
+    HasActivationRequired
+    IsCustom
+    IsOwnedByProfile
+    Label
+    LicenseId
+    Name
+    PermissionsPermissionName
+    PermissionSetGroupId
+    ProfileId
+    Type
+    UserLicenseId
+    
+For example, to search for all permission sets that contain the “Modify All Data” permission:
+
+SELECT Name, PermissionsModifyAllData
+FROM PermissionSet
+WHERE PermissionsModifyAllData=true
+
+When combined with the PermissionSetAssignment object, you can create a nested query that returns all users assigned to a particular permission like “Modify All Data”:
+
+SELECT Name, (SELECT AssigneeId FROM Assignments)
+FROM PermissionSet
+WHERE PermissionsModifyAllData=true
+
+
+Every permission set can be associated with a user license or permission set license. If you plan to assign a permission set to multiple users with different user and permission set licenses, leave LicenseId empty. If only users with one type of license use this permission set, set the LicenseId to that single user or permission set license. If you want a permission set associated with a permission set license, then set LicenseId to the permission set license. To get the LicenseId, run this query:
+
+SELECT Id, Name
+FROM UserLicense
+
+
+Alternatively, to query a user or profile for the LicenseId.
+
+SELECT Id, Profile.UserLicenseId
+FROM User
+
+
+For example, the following returns all permission sets where the “Read” permission is enabled for the Merchandise__c object.
+
+SELECT SobjectType, ParentId, PermissionsRead
+FROM ObjectPermissions
+WHERE PermissionsRead = True AND SobjectType = 'Merchandise__c'
+
+
+You can query for all permission sets that have “Read” on an object. However, you can’t query for permission sets that have no access on an object, because no records exist for that object. For example, the following returns no records because the object must have at least “Read” to return any records.
+
+SELECT SobjectType, ParentId, PermissionsRead
+FROM ObjectPermissions
+WHERE PermissionsRead = False AND SobjectType = 'Merchandise__c'
+
+If you have at least the “Read” permission on an object, you can create a conditional query on other permissions in the same object. For example, the following returns any records where the object has at least the “Read” permission but not the “Edit” permission.
+
+SELECT ParentId, PermissionsRead, PermissionsEdit
+FROM ObjectPermissions
+WHERE PermissionsEdit = False AND SobjectType = 'Merchandise__c'
+
+
+To set an object or field permission to no access, delete the record that contains the permission. For example, to disable all object permissions in the Merchandise__c object for a particular permission set, first query to retrieve the ID of the object permission record.
+
+SELECT Id
+FROM ObjectPermissions
+WHERE SobjectType = 'Merchandise__c'
+
+
+View a Permission Set with Nested Queries
+You can build on the PermissionSet object using child relationships that show all of the permissions in a single permission set. For example, the following returns all permission sets and displays the “Transfer Leads” permission, as well as any “Read” permissions on any objects and fields.
+
+SELECT Label, PermissionsTransferAnyLead,
+(SELECT SobjectType, PermissionsRead FROM ObjectPerms),
+(SELECT SobjectType, Field, PermissionsRead FROM FieldPerms)
+FROM PermissionSet
+
+
+The following example returns all permission sets, including those owned by a profile.
+
+SELECT Id, Label, ProfileId, Profile.Name
+FROM PermissionSet
+
+
+The following returns all permission sets except those permissions owned by profiles.
+SELECT Id, Label, ProfileId, Profile.Name, IsOwnedByProfile
+FROM PermissionSet
+WHERE IsOwnedByProfile = FALSE
+
+Because permission sets have child objects in the API, you can query their values on permission sets owned by a profile. For example, the following returns all enabled object permission records for profiles only.
+SELECT Id,ParentId, PermissionsRead, SobjectType, Parent.ProfileId
+FROM ObjectPermissions
+WHERE Parent.IsOwnedByProfile = TRUE
+
+Once you have the IDs for permission sets that are owned and not owned by profiles, use the PermissionSetAssignment object to see if users can access objects or fields via their profile permissions or their permission sets. For example, the following SOQL query returns all users who have the “Read” permission on the Merchandise__c object. It also specifies whether the permission is granted through a profile or permission set.
+SELECT Assignee.Name, PermissionSet.Id, PermissionSet.isOwnedByProfile
+FROM PermissionSetAssignment
+WHERE PermissionSetId
+IN (SELECT ParentId
+FROM ObjectPermissions
+WHERE SObjectType = 'Merchandise__c' AND PermissionsRead = true)
+    
+    
+
+
+PermissionSetAssignment
+    AssigneeId
+    ExpirationDate
+    IsActive
+    IsRevoked
+    PermissionSetGroupId
+    PermissionSetId 
+    
+
+For example, to search for all permission sets assigned to a particular user:
+SELECT Id, PermissionSetId
+FROM PermissionSetAssignment
+WHERE AssigneeId = '005600000017cKt'
+To search for all users assigned to a particular permission set:
+SELECT Id, AssigneeId
+FROM PermissionSetAssignment
+WHERE PermissionSetId = '0PS30000000000e'
+
+User Licenses
+When assigning a permission set, if the PermissionSet​ has a UserLicenseId, its UserLicenseId and the Profile​UserLicenseId must match. To determine a user's license assignment, query the user's profile and then query the profile's license.
+For example, to find a user's profile ID:
+SELECT Id, ProfileId
+FROM User
+WHERE Id = '005D0000001GMAT'
+To find a permission set's UserLicenseId:
+SELECT Id, LicenseId
+FROM PermissionSet
+WHERE Id = '0PS30000000000e'
+If the IDs match, the assignment succeeds.
+To find all the permission sets with no license that are assigned to any user:
+SELECT Id, Assignee.Name, PermissionSet.Name
+FROM PermissionSetAssignment
+WHERE PermissionSet.LicenseId = null
+
+
+PermissionSetGroupComponent
+    PermissionSetGroupId
+    PermissionSetId
+    
+PermissionSetLicense
+    DeveloperName
+    ExpirationDate
+    IsAvailableForIntegrations
+    IsSupplementLicense
+    Language
+    MasterLabel
+    MaximumPermissionsPermissionName
+    PermissionSetLicenseKey
+    Status
+    TotalLicenses
+    UsedLicenses
+
+    
+Users with the “View Setup and Configuration” permission can use the PermissionSetLicense object to view the set of currently defined permission set licenses in your organization.
+
+Use the PermissionSetLicense object to query existing permission licenses.
+
+For example, to return a list of all active permission set licenses:
+SELECT MasterLabel 
+FROM PermissionSetLicense
+WHERE Status = 'Active'
+When combined with the PermissionSetLicenseAssign object, you can create a nested query that returns all users assigned to a particular permission set license like “Identity Connect”:
+SELECT MasterLabel, (SELECT AssigneeId FROM PermissionSetLicenseAssign) 
+FROM PermissionSetLicense 
+WHERE MaximumPermissionsIdentityConnect=true
+
+
+
+PermissionSetLicenseAssign
+    AssigneeId
+    IsRevoked
+    LastCreatedByChangeId
+    LastDeletedByChangeId
+    PermissionSetLicenseId
+    
+    
+Use the PermissionSetLicenseAssign object for querying permission set license assignments to find out which permission set licenses are assigned to which users. Because each user can be assigned to many permission set licenses, each PermissionSetLicenseAssign ID represents the association of a single user and single permission set license.
+
+For example, to search for all of the permission sets assigned to a particular user:
+SELECT Id, PermissionSetLicenseId
+FROM PermissionSetLicenseAssign
+WHERE AssigneeId = '005D0000001RFek'
+To search for all users assigned to a particular permission set license:
+SELECT AssigneeId 
+FROM PermissionSetLicenseAssign
+WHERE PermissionSetLicenseId = '0PLD000000003mwOAA'
+
+
+UserAccountTeamMember
+    AccountAccessLevel
+    CaseAccessLevel
+    ContactAccessLevel
+    OpportunityAccessLevel
+    OwnerId
+    TeamMemberRole
+    UserId
+    
+UserAccessPolicy
+    BooleanFilter
+    Description
+    DeveloperName
+    Language
+    MasterLabel
+    Order
+    Status
+    TriggerType
+    
+    
+UserAppInfo
+    AppDefinitionId
+    FormFactor
+    UserId
+    
+UserAuthCertificate
+    CertificateChain
+    CertificateChainLength
+    DeveloperName
+    ExpirationDate
+    Fingerprint
+    Language
+    MasterLabel
+    SerialNumber
+    UserID
+    
+    
+UserLicense
+    LicenseDefinitionKey
+    MasterLabel
+    MonthlyLoginsEntitlement
+    MonthlyLoginsUsed
+    Name
+    Status
+    TotalLicenses
+    UsedLicenses
+    UsedLicensesLastUpdated
+    
+
+
+
+
+    
+User
+    AboutMe
+    AccountId
+    Alias
+    ContactId
+    CurrentStatus
+    DefaultDivision
+    Department
+    Division
+    Email
+    FirstName
+    LastName
+    Username
+    IsActive
+    IsPortalEnabled
+    PortalRole
+    Manager
+    ManagerId
+    Name
+    NumberOfFailedLogins
+    ProfileId
+    UserPermissionsInteractionUser
+    UserRoleId
+    UserType
+    
+    
+UserShare
+    IsActive
+    UserId
+    UserOrGroupId
+
+    
+    
+    
+    
+select id, name, 
+       profile.name, 
+       userrole.name, 
+from user where profile.name = '[TO_DELETE] IdInvest Partner Community User'
+
+
+select user.id, user.Username, user.profile.name, user.profile.id, user.IsActive FROM user where profile.name = '[TO_DELETE] IdInvest Partner Community User'
+
+SELECT Id, Name FROM Profile where profile.name = '[TO_DELETE] IdInvest Partner Community User'
+
+
+
+    
+UserRole
+    ContactAccessForAccountOwner
+    CaseAccessForAccountOwner
+    DeveloperName
+    Name
+    OpportunityAccessForAccountOwner
+    ParentRoleId
+    
+    
+For example, the following code finds all roles that are not assigned to any users.
+SELECT Id, Name, DeveloperName 
+FROM UserRole 
+WHERE Id NOT IN (SELECT UserRoleId 
+                 FROM User 
+                 WHERE UserRoleId !='000000000000000')
+                 
+
+UserLicense
+    LicenseDefinitionKey
+    MasterLabel
+    Name
+    Status
+    TotalLicenses
+    UsedLicenses
+
+    
+Profile
+    Description
+    IsSsoEnabled
+    Name
+    PermissionsPermissionName
+    UserLicenseId
+    UserType
+    
+
+ObjectPermissions
+    ParentId
+    PermissionsCreate
+    PermissionsDelete
+    PermissionsEdit
+    PermissionsModifyAllRecords
+    PermissionsRead
+    PermissionsViewAllRecords
+    SobjectType
+    
+    
+Permission Dependencies
+Some user permissions have dependencies on object permissions. For example, if a permission set has the “Transfer Leads” permission, it also has “Read” and “Create” on the leads object.
+
+You can query from ObjectPermissions up to the parent PermissionSet object. For example:
+
+SELECT Parent.Name, Parent.PermissionsTransferAnyLead, PermissionsRead, PermissionsCreate
+FROM ObjectPermissions
+WHERE SobjectType = 'Lead'
+
+
+Determining Object Access with “Modify All Data”
+When using SOQL to query object permissions, be aware that some object permissions are enabled because a user permission requires them.
+
+The exception to this rule is when “Modify All Data” is enabled. While it enables all object permissions, it doesn’t physically store any object permission records in the database. As a result, unlike object permissions that are required by a user permission—such as “View All Data” or “Import Leads”—the query still returns permission sets with “Modify All Data,” but the object permission record will contain an invalid ID that begins with “000”. This ID indicates that the object has full access due to “Modify All Data” and the object permission record can’t be updated or deleted. To remove full access from these objects, disable “Modify All Data” and then delete the resulting object permission record. This ensures that when using SOQL to find all the objects that have full access, it returns all objects that have this access regardless of whether it’s due to “Modify All Data” or because an administrator set full access.
+
+For example, the following will return all permission sets that have “Read” on the Merchandise__c object, regardless of whether it’s explicitly defined on the object or implicitly defined through “Modify All Data.”
+
+SELECT Id, Parent.label, SobjectType, PermissionsRead,
+   Parent.PermissionsModifyAllData, ParentId
+FROM ObjectPermissions
+WHERE PermissionsRead = true and SobjectType = 'Merchandise__c'
+
+
+Nesting Object Permissions
+You can nest ObjectPermissions in a PermissionSet query. For example, the following returns any permission sets where “Transfer Leads” is true. Additionally, the result set will include the “Read” object permission on leads. This is done by nesting the SOQL with an object permission query using the relationship name for object permissions: ObjectPerms.
+SELECT Id,Name,PermissionsTransferAnyLead,
+(SELECT Id, PermissionsRead from ObjectPerms where SobjectType='Lead')
+FROM PermissionSet
+WHERE PermissionsTransferAnyLead = true
+
+
+The following two queries return the same columns with different results, based on whether you use the child relationship or parent notation.
+SELECT Id, Name, PermissionsModifyAllData,
+(SELECT Id, SobjectType, PermissionsRead from Objectperms)
+FROM PermissionSet
+WHERE PermissionsModifyAllData=true
+versus:
+SELECT Id, SObjectType, PermissionsRead, Parent.Id, Parent.Name, Parent.PermissionsModifyAllData
+FROM ObjectPermissions
+WHERE SObjectType='Merchandise__c'
+
+
+
+FieldPermissions
+    Field
+    ParentId
+    PermissionsEdit
+    PermissionsRead
+    SobjectType
+    
+    
+    
+    
+The rows returned always use the API name. For example:
+SELECT SobjectType, Field
+FROM FieldPermissions
+WHERE Field='Contact.Account'
+and
+SELECT SobjectType, Field
+FROM FieldPermissions
+WHERE Field='Contact.AccountId'
+both return
+Contact, Contact.AccountId
+
+
+For example, the following query returns all FieldPermissions records that have at least the “Read” permission. The results include the field, object, and permission set names.
+
+SELECT SobjectType, Field, PermissionsRead, Parent.Name
+FROM FieldPermissions
+WHERE PermissionsRead = True
+Include the field’s parent object when querying FieldPermissions. For example, to find all rows that match the Account object’s Type field, create the following query:
+
+SELECT Id, SobjectType, Field
+FROM FieldPermissions
+WHERE Field = 'Account.Type' AND SobjectType = 'Account'
+To find which permission sets are backed by profiles with the Account object, you can use a query like the following example:
+
+SELECT Id, ParentId, SobjectType, Field, PermissionsEdit, PermissionsRead, Parent.Name
+FROM FieldPermissions
+WHERE SobjectType = 'Account' and Parent.IsOwnedByProfile = true
+ORDER BY SObjectType, Field
+Both SobjectType and Field must be included in the SELECT line of the query. Provide the full API name of the field in the form of SobjectType.Field when querying for a field.
+
+As a result, the following query returns no records, even though users do have some access to some of the fields.
+
+SELECT Field, SobjectType, PermissionsRead
+FROM FieldPermissions
+WHERE Field='Id'
+
+Working with Custom Activity Fields
+While tasks and events are considered separate objects, they share a common set of activity custom fields. As a result, when a custom task field is created, a custom event field is also created, and vice versa. You can display the custom field on the event layout, task layout, or both event and task layouts.
+
+Although custom activity fields are shared between tasks and events, you see separate FieldPermissions records for the task and event. However, changes made to one field permission record are automatically made to the other. For example, if you create a custom activity field, assign field permissions to it in a permission set, and run the following query, the query returns two records with the same permission value.
+
+SELECT Field, Id, ParentId, PermissionsEdit, PermissionsRead, SobjectType
+FROM FieldPermissions
+WHERE SobjectType = 'event' OR SobjectType ='task'
+
+Nesting Field Permissions
+You can nest FieldPermissions in a PermissionSet query. For example, the following returns any permission sets where “Edit Read Only Fields” is true. Also, the result set includes both the “Read” and “Edit” field permission on the Merchandise object. Get similar results by nesting the SOQL with a field permission query using the relationship name for field permissions: FieldPerms.
+SELECT PermissionsEditReadonlyFields,
+(SELECT SobjectType, Field, PermissionsRead, PermissionsEdit
+FROM FieldPerms
+WHERE SobjectType = 'Merchandise__c')
+FROM PermissionSet
+WHERE PermissionsEditReadonlyFields = true
+As a result, it’s possible to traverse the relationship between the PermissionSet and any child-related objects (in this case, FieldPermissions). You can do this from the PermissionSet object by using the child relationship (ObjectPerms, FieldPerms, and so on) or from the child object by referencing the PermissionSet with Parent.permission_set_attribute.
+
+It’s important to consider when to use a conditional WHERE statement to restrict the result set. To query based on an attribute on the permission set object, nest the SOQL with the child relationship. However, to query based on an attribute on the child object, you must reference the permission set parent attribute in your query.
+
+The following two queries return the same columns with different results, based on whether you use the child relationship or parent notation.
+SELECT PermissionsEditReadonlyFields,
+(SELECT SobjectType, Field, PermissionsRead, PermissionsEdit
+FROM FieldPerms
+WHERE SobjectType = 'Merchandise__c')
+FROM PermissionSet
+WHERE PermissionsEditReadonlyFields = true
+Versus:
+SELECT SobjectType, Field, PermissionsRead, PermissionsEdit, Parent.Name,
+   Parent.PermissionsEditReadonlyFields
+FROM FieldPermissions
+WHERE SObjectType='Merchandise__c'
+
+
+
+
+FieldSecurityClassification
+    ApiName
+    Description
+    IsHighRiskLevel
+    MasterLabel
+    
+    
+FlowDefinitionView
+    ActiveVersionId
+    ApiName
+    ApiVersion
+    Builder
+    CapacityCategory
+    Description
+    DurableId
+    Environments
+    HasAsyncAfterCommitPath
+    InstalledPackageName
+    IsActive
+    IsOutOfDate
+    Label
+    LatestVersionId
+    ManageableState
+    ProcessType
+    RecordTriggerType
+    TriggerObjectOrEventId
+    TriggerObjectOrEventLabel
+    TriggerOrder
+    TriggerType
+    VersionNumber
+
+    
+    
+    
+    
+Group
+    Description
+    DefaultDivision
+    DeveloperName
+    DoesIncludeBosses
+    Name
+    OwnerId
+    RelatedId
+    Type
+    
+GroupMember
+    GroupId
+    UserOrGroupId
+    
+    
+ListView
+    DeveloperName
+    IsSoqlCompatible
+    LastModifiedById
+    LastReferencedDate
+    LastViewedDate
+    Name
+    SobjectType
+    
+    
+LoginHistory
+    ApiType
+    ApiVersion
+    Application
+    AuthMethodReference
+    AuthenticationServiceId
+    Browser
+    CountryIso
+    ForwardedForIp
+    LoginGeoId
+    LoginSubType
+    LoginTime
+    LoginType
+    LoginUrl
+    OptionsIsGet
+    OptionsIsPost
+    Platform
+    SourceIp
+    Status
+    TlsProtocol
+    UserId
+    
+    
+Simple query showing UserId & LoginTime for each user	SELECT UserId, LoginTime from LoginHistory;
+
+Query showing logins only after a specified date and time	SELECT UserId, LoginTime from LoginHistory WHERE LoginTime > 2010-09-20T22:16:30.000Z;
+
+Query showing logins for a specific time interval	SELECT UserId, LoginTime from LoginHistory WHERE LoginTime > 2010-09-20T22:16:30.000Z AND LoginTime < 2010-09-21T22:16:30.000Z;
+
+Query showing the authentication service for a SAML login event, where Id=AuthenticationServiceId from LoginHistory	SELECT name, issuer, samlVersion FROM SamlSsoConfig WHERE Id = '0LE###############'
+
+Query showing the authentication service for an authentication provider login event, where Id=AuthenticationServiceId from LoginHistory	SELECT Type, DeveloperName FROM AuthProvider WHERE Id = '0SO###############'
+
+
+SharingRules
+    sharingCriteriaRules
+    sharingGuestRules
+    sharingOwnerRules
+    sharingTerritoryRules
+    
+SharingCriteriaRule
+    booleanFilter
+    criteriaItems
+    includeRecordsOwnedByAll
+    
+AccountSharingRules
+CampaignSharingRules
+CaseSharingRules
+ContactSharingRules
+LeadSharingRules
+OpportunitySharingRules
+AccountTerritorySharingRules
+CustomObjectSharingRules
+UserSharingRules
+    criteriaBasedRules
+    ownerRules
+    
+
+
+
+LoginIp
+    ChallengeMethod
+    ChallengeSentDate
+    IsAuthenticated
+    SourceIp
+    UsersId
+    
+    
+OauthToken
+    AccessToken
+    AppMenuItemId
+    AppName
+    DeleteToken
+    Id
+    LastUsedDate
+    RequestToken
+    UseCount
+    UserId
+    
+    
+OpportunityOwnerSharingRule
+    Description
+    DeveloperName
+    GroupId
+    Name
+    OpportunityAccessLevel
+    UserOrGroupId
+    
+    
+RecordType
+    BusinessProcessId
+    Description
+    DeveloperName
+    IsActive
+    IsPersonType
+    Name
+    SobjectType
+    
+
+StaticResource
+    Body
+    BodyLength
+    CacheControl
+    ContentType
+    Description
+    Name
+    
+
+UserLogin
+    IsFrozen
+    IsPasswordLocked
+    UserId
+    
+To query for all frozen users in your organization:
+SELECT Id, UserId
+FROM UserLogin
+WHERE IsFrozen = true
+
+UserPermissionAccess
+    LastCacheUpdate
+    Permissions
+    
+UserRecordAccess
+    HasAllAccess
+    HasDeleteAccess
+    HasEditAccess
+    HasTransferAccess
+    HasReadAccess
+    MaxAccessLevel
+    RecordId
+    UserId
+    
+Up to 200 record IDs can be queried. You can include an ORDER BY clause for any field that is being selected in the query.
+
+The following sample query returns the records, whether the queried user has read and transfer access to each record, and the user’s maximum access level to each record.
+
+SELECT RecordId, HasReadAccess, HasTransferAccess, MaxAccessLevel
+     FROM UserRecordAccess
+     WHERE UserId = [single ID]
+     AND RecordId = [single ID]      //or Record IN [list of IDs]
+The following query returns the records to which a queried user has read access.
+
+SELECT RecordId
+     FROM UserRecordAccess
+     WHERE UserId = [single ID]
+     AND RecordId = [single ID]      //or Record IN [list of IDs]
+     AND HasReadAccess = true
+Using API version 30.0 and later, UserRecordAccess is a foreign key on the records. You can’t filter by or provide the UserId or RecordId fields when using this object as a lookup or foreign key. The previous sample queries can be run as:
+
+SELECT Id, Name, UserRecordAccess.HasReadAccess, UserRecordAccess.HasTransferAccess, UserRecordAccess.MaxAccessLevel 
+      FROM Account
+SELECT Id, Name, UserRecordAccess.HasReadAccess 
+      FROM Account
+SOQL restrictions:
+When the running user is querying a user's access to a set of records, records that the running user doesn’t have read access to are filtered out of the results.
+When filtering by UserId and RecordId only, you must use SELECT RecordId and optionally one or more of the access level fields:HasReadAccess, HasEditAccess, HasDeleteAccess, HasTransferAccess, and HasAllAccess. You can include MaxAccessLevel.
+When filtering by UserId, RecordId, and an access level field, you must use SELECT RecordId only.
+
+UserRole
+    CaseAccessForAccountOwner
+    ContactAccessForAccountOwner
+    DeveloperName
+    ForecastUserId
+    IsPartner
+    MayForecastManagerShare
+    Name
+    OpportunityAccessForAccountOwner
+    ParentRoleId
+    PortalAccountId
+    PortalAccountOwnerId
+    PortalRole
+    PortalType
+    RollupDescription
+    
+For example, the following code finds all roles that are not assigned to any users.
+SELECT Id, Name, DeveloperName 
+FROM UserRole 
+WHERE Id NOT IN (SELECT UserRoleId 
+                 FROM User 
+                 WHERE UserRoleId !='000000000000000')

@@ -1,0 +1,11 @@
+# To delete components
+# use the same procedure as with deploying components
+# but also include a delete manifest file 
+# that’s named destructiveChanges.xml 
+# and list the components to delete in this manifest.
+
+# To deploy the destructive changes
+# you must also have a package.xml 
+# file that lists no components to deploy, 
+# includes the API version, 
+# and is in the same directory as destructiveChanges.xml

@@ -1,0 +1,3 @@
+# To delete components after adding or updating other components
+# create a manifest file that’s named destructiveChangesPost.xml 
+# and include the components to delete

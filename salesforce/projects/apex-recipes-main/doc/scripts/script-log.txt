@@ -1,0 +1,40 @@
+target dir = /home/eoex/Documents/EOEX/CONSULTING/DEVELOPER/Salesforce/projects/Template-Proj/scripts
+  create eoex-sfdx-base-proj/config/project-scratch-def.json
+  create eoex-sfdx-base-proj/README.md
+  create eoex-sfdx-base-proj/sfdx-project.json
+  create eoex-sfdx-base-proj/manifest/package.xml
+  create eoex-sfdx-base-proj/.husky/pre-commit
+  create eoex-sfdx-base-proj/.vscode/extensions.json
+  create eoex-sfdx-base-proj/.vscode/launch.json
+  create eoex-sfdx-base-proj/.vscode/settings.json
+  create eoex-sfdx-base-proj/~/Documents/EOEX/CONSULTING/DEVELOPER/Salesforce/projects/public/main/default/lwc/.eslintrc.json
+  create eoex-sfdx-base-proj/~/Documents/EOEX/CONSULTING/DEVELOPER/Salesforce/projects/public/main/default/aura/.eslintrc.json
+  create eoex-sfdx-base-proj/scripts/soql/account.soql
+  create eoex-sfdx-base-proj/scripts/apex/hello.apex
+  create eoex-sfdx-base-proj/.forceignore
+  create eoex-sfdx-base-proj/.gitignore
+  create eoex-sfdx-base-proj/.prettierignore
+  create eoex-sfdx-base-proj/.prettierrc
+  create eoex-sfdx-base-proj/jest.config.js
+  create eoex-sfdx-base-proj/package.json
+
+target dir = /home/eoex/Documents/EOEX/CONSULTING/DEVELOPER/Salesforce/projects/Template-Proj/scripts
+  create eoex-sfdx-base-project/config/project-scratch-def.json
+  create eoex-sfdx-base-project/README.md
+  create eoex-sfdx-base-project/sfdx-project.json
+  create eoex-sfdx-base-project/manifest/package.xml
+  create eoex-sfdx-base-project/.husky/pre-commit
+  create eoex-sfdx-base-project/.vscode/extensions.json
+  create eoex-sfdx-base-project/.vscode/launch.json
+  create eoex-sfdx-base-project/.vscode/settings.json
+  create eoex-sfdx-base-project/main/default/lwc/.eslintrc.json
+  create eoex-sfdx-base-project/main/default/aura/.eslintrc.json
+  create eoex-sfdx-base-project/scripts/soql/account.soql
+  create eoex-sfdx-base-project/scripts/apex/hello.apex
+  create eoex-sfdx-base-project/.forceignore
+  create eoex-sfdx-base-project/.gitignore
+  create eoex-sfdx-base-project/.prettierignore
+  create eoex-sfdx-base-project/.prettierrc
+  create eoex-sfdx-base-project/jest.config.js
+  create eoex-sfdx-base-project/package.json
+
