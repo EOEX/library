@@ -13,6 +13,7 @@ public with sharing class HelloEOEX
     {
         // Display a Message
 
-        system.debug('Hello EOEX');
+        system.debug('Hello EOEX !');
+        system.debug('CONGRATULATIONS');
     }
 }
