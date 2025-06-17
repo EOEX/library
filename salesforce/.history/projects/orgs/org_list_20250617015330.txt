@@ -1,14 +1,18 @@
 
 
-TEMPLATE
-Type: 
-Name: 
-ID: 
-URL: 
-usr: 
-pass: 
-***************************************************************************
+Type: Salesforce Playground
+Name: Test Playground
+ID: 00DJ9000000STp3
+URL: https://creative-goat-hlcqyc-dev-ed.trailblaze.lightning.force.com/lightning/setup/Flows/home
+usr: sgrosset@creative-goat-hlcqyc.com
+pass: "25
 
+Type: Salesforce Playground
+Name: Test Client
+ID: 00DWU00000PwLcv
+URL: https://curious-shark-v2k8cd-dev-ed.trailblaze.lightning.force.com/
+usr: sgrosset@curious-shark-v2k8cd.com
+pass: "
 
 Type: Salesforce Playground
 Name: Retail
