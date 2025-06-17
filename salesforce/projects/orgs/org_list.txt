@@ -1,0 +1,59 @@
+
+
+Type: Salesforce Playground
+Name: Test Playground
+ID: 00DJ9000000STp3
+URL: https://creative-goat-hlcqyc-dev-ed.trailblaze.lightning.force.com/lightning/setup/Flows/home
+usr: sgrosset@creative-goat-hlcqyc.com
+pass: "25
+
+Type: Salesforce Playground
+Name: Test Client
+ID: 00DWU00000PwLcv
+URL: https://curious-shark-v2k8cd-dev-ed.trailblaze.lightning.force.com/
+usr: sgrosset@curious-shark-v2k8cd.com
+pass: "
+
+Type: Salesforce Playground
+Name: Retail
+ID: 00DQy00000R6Ql6
+URL: https://eoex-org-retail-dev-ed.trailblaze.lightning.force.com/
+usr: sgrosset@resilient-unicorn-x4qe0.com
+pass: "
+
+
+==========================================================================
+Type: Salesforce Playground
+Name: EOEX Dev Hub
+ID: 00Dd200000CPxpa
+URL: https://eoex-dev-hub-dev-ed.trailblaze.lightning.force.com/
+usr: sgrosset@brave-impala-h22d97.com
+pass: "
+==========================================================================
+
+
+--------------------------------------------------------------------------
+SCRATCHES
+--------------------------------------------------------------------------
+Type: Salesforce Scratch Org
+Name: EOEX Scratch 17/06/2025
+ID: 00DJW00000DEFu9
+URL: https://coldbrew-espresso-3914-dev-ed.scratch.lightning.force.com/
+usr: test-eknzmrfq95rq@example.com
+pass: "
+
+
+
+--------------------------------------------------------------------------
+ORH SHAPES
+--------------------------------------------------------------------------
+
+
+
+--------------------------------------------------------------------------
+ORG SNAPSHOTS
+--------------------------------------------------------------------------
+
+
+
+
