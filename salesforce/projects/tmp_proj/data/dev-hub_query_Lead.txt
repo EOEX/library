@@ -1,0 +1,2 @@
+SELECT Company, Description, Email, FirstName, Id, LastName, Name, MasterRecordId, Phone, Status
+  FROM Lead

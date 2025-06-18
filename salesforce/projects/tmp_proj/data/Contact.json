@@ -1,0 +1,220 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef1"
+            },
+            "Email": "rose@edge.com",
+            "FirstName": "Rose",
+            "LastName": "Gonzalez",
+            "Name": "Rose Gonzalez",
+            "Phone": "(512) 757-6000"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef2"
+            },
+            "Email": "sean@edge.com",
+            "FirstName": "Sean",
+            "LastName": "Forbes",
+            "Name": "Sean Forbes",
+            "Phone": "(512) 757-6000"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef3"
+            },
+            "Email": "jrogers@burlington.com",
+            "FirstName": "Jack",
+            "LastName": "Rogers",
+            "Name": "Jack Rogers",
+            "Phone": "(336) 222-7000"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef4"
+            },
+            "Email": "pat@pyramid.net",
+            "FirstName": "Pat",
+            "LastName": "Stumuller",
+            "Name": "Pat Stumuller",
+            "Phone": "(014) 427-4427"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef5"
+            },
+            "Email": "a_young@dickenson.com",
+            "FirstName": "Andy",
+            "LastName": "Young",
+            "Name": "Andy Young",
+            "Phone": "(785) 241-6200"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef6"
+            },
+            "Email": "barr_tim@grandhotels.com",
+            "FirstName": "Tim",
+            "LastName": "Barr",
+            "Name": "Tim Barr",
+            "Phone": "(312) 596-1000"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef7"
+            },
+            "Email": "bond_john@grandhotels.com",
+            "FirstName": "John",
+            "LastName": "Bond",
+            "Name": "John Bond",
+            "Phone": "(312) 596-1000"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef8"
+            },
+            "Email": "spavlova@uog.com",
+            "FirstName": "Stella",
+            "LastName": "Pavlova",
+            "Name": "Stella Pavlova",
+            "Phone": "(212) 842-5500"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef9"
+            },
+            "Email": "lboyle@uog.com",
+            "FirstName": "Lauren",
+            "LastName": "Boyle",
+            "Name": "Lauren Boyle",
+            "Phone": "(212) 842-5500"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef10"
+            },
+            "Email": "b.levy@expressl&t.net",
+            "FirstName": "Babara",
+            "LastName": "Levy",
+            "Name": "Babara Levy",
+            "Phone": "(503) 421-7800"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef11"
+            },
+            "Email": "j.davis@expressl&t.net",
+            "FirstName": "Josh",
+            "LastName": "Davis",
+            "Name": "Josh Davis",
+            "Phone": "(503) 421-7800"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef12"
+            },
+            "Email": "jane_gray@uoa.edu",
+            "FirstName": "Jane",
+            "LastName": "Grey",
+            "Name": "Jane Grey",
+            "Phone": "(520) 773-9050"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef13"
+            },
+            "Email": "asong@uog.com",
+            "FirstName": "Arthur",
+            "LastName": "Song",
+            "Name": "Arthur Song",
+            "Phone": "(212) 842-5500"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef14"
+            },
+            "Email": "ajames@uog.com",
+            "FirstName": "Ashley",
+            "LastName": "James",
+            "Name": "Ashley James",
+            "Phone": "+44 191 4956203"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef15"
+            },
+            "Email": "tripley@uog.com",
+            "FirstName": "Tom",
+            "LastName": "Ripley",
+            "Name": "Tom Ripley",
+            "Phone": "(650) 450-8810"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef16"
+            },
+            "Email": "ldcruz@uog.com",
+            "FirstName": "Liz",
+            "LastName": "D'Cruz",
+            "Name": "Liz D'Cruz",
+            "Phone": "(650) 450-8810"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef17"
+            },
+            "Email": "efrank@genepoint.com",
+            "FirstName": "Edna",
+            "LastName": "Frank",
+            "Name": "Edna Frank",
+            "Phone": "(650) 867-3450"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef18"
+            },
+            "Email": "agreen@uog.com",
+            "FirstName": "Avi",
+            "LastName": "Green",
+            "Name": "Avi Green",
+            "Phone": "(212) 842-5500"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef19"
+            },
+            "FirstName": "Siddartha",
+            "LastName": "Nedaerk",
+            "Name": "Siddartha Nedaerk"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef20"
+            },
+            "FirstName": "Jake",
+            "LastName": "Llorrac",
+            "Name": "Jake Llorrac"
+        }
+    ]
+}

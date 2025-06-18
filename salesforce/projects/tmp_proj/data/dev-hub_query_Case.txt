@@ -1,0 +1,2 @@
+SELECT AssetId, Id, MasterRecordId, Origin, ParentId, SuppliedCompany, SuppliedEmail, SuppliedName, SuppliedPhone, Subject, Status, Description
+  FROM Case

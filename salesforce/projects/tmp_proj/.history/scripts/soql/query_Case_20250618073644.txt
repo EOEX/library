@@ -1,0 +1,2 @@
+SELECT AccountId, AssetId, CaseNumber, ClosedDate, Comments, ContactEmail, ContactFax, ContactId, ContactMobile, ContactPhone, CreatedById, CreatedDate, Description, EngineeringReqNumber__c, Id, IsClosed, IsDeleted, IsEscalated, LastModifiedById, LastModifiedDate, LastReferencedDate, LastViewedDate, MasterRecordId, Origin, OwnerId, ParentId, PotentialLiability__c, Priority, Product__c, Reason, SLAViolation__c, Status, Subject, SuppliedCompany, SuppliedEmail, SuppliedName, SuppliedPhone, SystemModstamp, Type
+  FROM Case
